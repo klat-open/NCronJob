@@ -821,6 +821,20 @@ public sealed class IntegrationTests : JobIntegrationBase
                     .And
                     .WithCronExpression(Cron.AtEveryMinute))
         },
+        {
+            // No way to invoke DummyJob inambiguously
+            s => s.AddJob<DummyJob>(p => p
+                    .WithParameter("one")
+                    .And
+                    .WithParameter("two"))
+        },
+        {
+            // Pure duplicate registration
+            s => s.AddJob<DummyJob>(p => p
+                    .WithParameter("one")
+                    .And
+                    .WithParameter("one")).RunAtStartup()
+        },
     };
 
     public static TheoryData<Action<NCronJobOptionBuilder>> ValidRegistrations = new()
@@ -837,6 +851,24 @@ public sealed class IntegrationTests : JobIntegrationBase
                     .And
                     .WithCronExpression(Cron.AtEveryMinute).WithParameter("two"))
         },
+        {
+            s => s.AddJob<DummyJob>(p => p
+                    .WithParameter("one"))
+        },
+        // TODO: Re-implement this test in a UseNCronJob context
+        // A simple check in JobRegistry.Add() doesn't fit the bill as RunAtStartup()
+        // updates already existing job definitions (and runs after the call to JobRegistry.Add()).
+        // And although this use case makes sense, it isn't valid UNTIL at least one job definition
+        // is marked as a StartupJob.
+        //
+        // Related: https://github.com/NCronJob-Dev/NCronJob/issues/221
+        //
+        //{
+        //    s => s.AddJob<DummyJob>(p => p
+        //            .WithParameter("one")
+        //            .And
+        //            .WithParameter("two")).RunAtStartup()
+        //},
         {
             s => {
                 s.AddJob<DummyJob>(p => p.WithName("Job1").WithCronExpression(Cron.AtEveryMinute))
