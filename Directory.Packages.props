@@ -11,13 +11,13 @@
     <PackageVersion Include="Polly" Version="8.6.3" />
   </ItemGroup>
   <ItemGroup Label="NCronJob NET8 dependencies" Condition="'$(TargetFramework)' == 'net8.0'">
-    <PackageVersion Include="Microsoft.Extensions.Hosting.Abstractions" Version="8.0.1" />
+    <PackageVersion Include="Microsoft.Extensions.Hosting.Abstractions" Version="9.0.8" />
   </ItemGroup>
   <ItemGroup Label="NCronJob NET9 dependencies" Condition="'$(TargetFramework)' == 'net9.0'">
-    <PackageVersion Include="Microsoft.Extensions.Hosting.Abstractions" Version="9.0.7" />
+    <PackageVersion Include="Microsoft.Extensions.Hosting.Abstractions" Version="9.0.8" />
   </ItemGroup>
   <ItemGroup Label="Samples">
-    <PackageVersion Include="Microsoft.AspNetCore.OpenApi" Version="8.0.19" />
+    <PackageVersion Include="Microsoft.AspNetCore.OpenApi" Version="9.0.8" />
     <PackageVersion Include="Microsoft.Extensions.Hosting" Version="9.0.8" />
     <PackageVersion Include="Swashbuckle.AspNetCore" Version="9.0.3" />
   </ItemGroup>
@@ -27,10 +27,10 @@
     <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.14.1" />
     <PackageVersion Include="Shouldly" Version="4.3.0" />
     <PackageVersion Include="System.ServiceModel.Primitives" Version="8.1.2" />
-    <PackageVersion Include="xunit.runner.visualstudio" Version="3.1.3">
+    <PackageVersion Include="xunit.runner.visualstudio" Version="3.1.4">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageVersion>
-    <PackageVersion Include="xunit.v3" Version="3.0.0" />
+    <PackageVersion Include="xunit.v3" Version="3.0.1" />
   </ItemGroup>
 </Project>
