@@ -152,6 +152,26 @@ public static class NCronJobExtensions
         return host;
     }
 
+    /// <summary>
+    /// Configures the host to use NCronJob. This will also start any given startup jobs and their dependencies.
+    /// </summary>
+    /// <remarks>
+    /// Failure to call this method (or <see cref="UseNCronJob(IHost)" />) when startup jobs are defined will lead to a fatal exception during the application start.
+    /// </remarks>
+    /// <param name="serviceProvider">The host.</param>
+    public static async Task<IServiceProvider> UseNCronJobAsync(this IServiceProvider serviceProvider)
+    {
+        ArgumentNullException.ThrowIfNull(serviceProvider);
+
+        var jobManager = serviceProvider.GetRequiredService<StartupJobManager>();
+        var stopToken = serviceProvider.GetRequiredService<IHostApplicationLifetime>().ApplicationStopping;
+        await jobManager.ProcessStartupJobs(stopToken);
+
+        serviceProvider.GetRequiredService<MissingMethodCalledHandler>().UseWasCalled = true;
+
+        return serviceProvider;
+    }
+
     // Inspired by https://github.com/dotnet/runtime/blob/main/src/libraries/Microsoft.Extensions.DependencyInjection.Abstractions/src/Extensions/ServiceCollectionDescriptorExtensions.cs
     // License MIT
     private static IServiceCollection TryAddSingleton<TService, TImplementation>(
